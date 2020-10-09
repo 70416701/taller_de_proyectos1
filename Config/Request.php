@@ -14,7 +14,6 @@
 				$ruta = array_filter($ruta);
 
 				if ($ruta[0] == "index.php") {
-					//$this->controlador = "Tecnico";
 					$this->controlador = "Inicio";
 				}else{
 					$this->controlador = array_shift($ruta);
@@ -26,7 +25,6 @@
 				}
 				$this->argumento = $ruta;
 			}else{
-				//$this->controlador = "Tecnico";
 				$this->controlador = "Inicio";
 				$this->metodo = "index";
 			}

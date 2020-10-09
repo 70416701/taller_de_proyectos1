@@ -53,9 +53,25 @@ class solicitudModelo
 	 	
 	 }
 
+	 public function access_by_idSol_codAc() {
+	 	$sql = "SELECT * FROM solicitudes WHERE idSolicitud = '{$this->idSolicitud}' AND codAcceso = '{$this->codAcceso}'";
+	 	$datos = $this->con->consultaRetorno($sql);
+	 	$row = mysqli_num_rows($datos);
+	 	return $row;
+	 }
+
+	 public function view_by_idSol_codAc() {
+	 	$sql = "SELECT * FROM solicitudes AS slctd INNER JOIN estados AS est ON slctd.Estados_idEstado = est.idEstado WHERE 
+	 	slctd.idSolicitud = '{$this->idSolicitud}'";
+	 	$datos = $this->con->consultaRetorno($sql);
+	 	$row = mysqli_fetch_assoc($datos);
+	 	return $row;
+	 }
+
 	 public function view_by_dni_sol()
 	 {
-	 	$sql = "SELECT * FROM solicitudes WHERE Solicitantes_DNI = '{$this->Solicitantes_DNI}'";
+	 	$sql = "SELECT * FROM solicitudes AS slctd INNER JOIN estados AS est ON slctd.Estados_idEstado = est.idEstado WHERE 
+	 	slctd.Solicitantes_DNI = '{$this->Solicitantes_DNI}'";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	$row = mysqli_fetch_assoc($datos);
 	 	return $row;

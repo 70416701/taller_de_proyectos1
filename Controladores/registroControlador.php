@@ -30,8 +30,6 @@ class registroControlador{
 		if ($_POST) {
 			$_SESSION['reg_solicitante'] = $_POST['dni'];
 
-			
-
 			$this->solicitante->set("DNI",$_POST['dni']);
 			$this->solicitante->set("apellidoPaterno",$_POST['apaterno']);
 			$this->solicitante->set("apellidoMaterno",$_POST['amaterno']);
@@ -55,23 +53,23 @@ class registroControlador{
 				$this->solicitud->set("Solicitantes_DNI",$_POST['dni']);
 				$row = $this->solicitud->view_by_dni_sol();
 
-			    $this->mail->SMTPDebug = 0;                      // Enable verbose debug output
-			    $this->mail->isSMTP();                                            // Send using SMTP
-			    $this->mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
-			    $this->mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-			    $this->mail->Username   = 'cloudtecsystem@gmail.com';                     // SMTP username
-			    $this->mail->Password   = '7MTV7maick8';                               // SMTP password
-			    $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-			    $this->mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+			    $this->mail->SMTPDebug = 0;                      			// Enable verbose debug output
+			    $this->mail->isSMTP();                                      // Send using SMTP
+			    $this->mail->Host       = 'smtp.gmail.com';                 // Set the SMTP server to send through
+			    $this->mail->SMTPAuth   = true;                             // Enable SMTP authentication
+			    $this->mail->Username   = 'cloudtecsystem@gmail.com';       // SMTP username
+			    $this->mail->Password   = '7MTV7maick8';                    // SMTP password
+			    $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+			    $this->mail->Port       = 587;                             	// TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
 			    //Recipients
 			    $this->mail->setFrom('cloudtecsystem@gmail.com', 'Mesa de Partes GRJ');
-			    $this->mail->addAddress($_POST['email']);     // Add a recipient
+			    $this->mail->addAddress($_POST['email']);     				// Add a recipient
 			    
 			    // Content
 			    $this->mail->isHTML(true);                                  // Set email format to HTML
 			    $this->mail->Subject = 'Codigo de ingreso';
-			    $this->mail->Body    = 'Bienvenido Mesa de Partes Virtual este es tu código de acceso <b>'.$row['codAcceso'].'</b>';
+			    $this->mail->Body    = 'Bienvenido Mesa de Partes Virtual este es tu número de solicitud <b>'.$row['idSolicitud'].'</b> y código de acceso <b>'.$row['codAcceso'].'</b>';
 			    
 			    $this->mail->send();
 			    //echo 'Mensaje enviado correctamente';

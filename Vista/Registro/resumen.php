@@ -24,7 +24,7 @@
                   <div class="container">
                     <div class="form-group row">
                       <div class="col-5">
-                        <label><strong>Numero de trámite:</strong></label>
+                        <label><strong>Numero de solicitud:</strong></label>
                       </div>
                       <div class="col-3">
                         <label><?= $datos['idSolicitud']?></label>
@@ -36,7 +36,7 @@
                         <label><strong>Fecha de registro:</strong></label>
                       </div>
                       <div class="col-3">
-                        <label><?= $datos['fechaRegistro']?></label>
+                        <label><?= date("d/m/Y", strtotime($datos['fechaRegistro']))?></label>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -44,15 +44,15 @@
                         <label><strong>Fecha estimada de respuesta:</strong></label>
                       </div>
                       <div class="col-3">
-                        <label>2020-10-09</label>
+                        <label><?= date("d/m/Y", strtotime($datos['fechaResp']))?></label>
                       </div>
                     </div>
                     <div class="form-group row">
                       <div class="col-3">
                         <label><strong>Estado:</strong></label>
                       </div>
-                      <div class="col-3">
-                        <label>En proceso de busqueda</label>
+                      <div class="col-5">
+                        <label><?= $datos['TipoEstado']?></label>
                       </div>
                     </div>
                     <!-- <div class="form-group row">
@@ -68,9 +68,9 @@
                         Se le ha enviado el <strong>código</strong> a su <strong>email registrado</strong>, esto le servirá para realizar la consulta del estado de su documento solicitado.
                       </span>
                     </div>
-                    <!-- <div class="form-group row">
-                      <input type="text" name="dni_reg_solicitante" value="<?= $datos;?>" hidden>
-                    </div> -->
+                    <div>
+                      <a href="<?= URL;?>" class="btn btn-secondary btn-block">Salir</a>
+                    </div>
                   </div>
               
                 </div>

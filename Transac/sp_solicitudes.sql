@@ -1,13 +1,13 @@
 DELIMITER //
 CREATE PROCEDURE sp_c_solicitudes ( IN
-	_otorgadox varchar(45),
+    _otorgadox varchar(45),
     _afavor varchar(45),
     _RUCNot varchar(10),
     _DNISol varchar(8),
     _DNIUser varchar(8)
 )
 BEGIN
-	DECLARE _codAcc varchar(6);
+    DECLARE _codAcc varchar(6);
     DECLARE _dniSolR varchar(1);
     DECLARE _dniSolL varchar(1);
     DECLARE _numRand varchar(2);
@@ -26,11 +26,12 @@ BEGIN
     SET _aMater = LEFT(UPPER(_apellidomaterno),1);
     SET _codAcc = concat(_dniSolL,_aPater,_numRand,_aMater,_dniSolR) ;
     
-    INSERT INTO solicitudes (idSolicitud,fechaRegistro,otorgadoX,aFavor,fechaDoc,pathVoucher,fechaPago,
+    INSERT INTO solicitudes (idSolicitud,fechaRegistro,fechaResp,otorgadoX,aFavor,fechaDoc,docEncontrado,comentarios,pathVoucher,fechaPago,
     fechaEntrega,codAcceso,Estados_idEstado,Notarios_RUC,Solicitantes_DNI,Usuarios_DNI) values 
-    (null,NOW(),_otorgadox,_afavor,null,null,null,null,_codAcc,'PROCBUSQ',
+    (null,now(),date_add(now(),interval 7 day),_otorgadox,_afavor,null,null,null,null,null,null,_codAcc,'PROCBUSQ',
     _RUCNot,_DNISol,_DNIUser);
 END;
 //DELIMITER ;
+
 /*------------ejecutando------------*/
 CALL sp_c_solicitudes('alva','roj','1234567893','48114711','78965433');
