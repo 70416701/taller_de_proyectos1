@@ -35,3 +35,48 @@ END;
 
 /*------------ejecutando------------*/
 CALL sp_c_solicitudes('alva','roj','1234567893','48114711','78965433');
+
+/*--------------------------------------------------------------------------------------------------------*/
+DELIMITER //
+CREATE PROCEDURE view_by_idSol_codAc ( IN
+    _idSolicitud int(11)
+)
+BEGIN
+        
+    SELECT * FROM solicitudes AS slctd INNER JOIN estados AS est ON slctd.Estados_idEstado = est.idEstado WHERE 
+    slctd.idSolicitud = _idSolicitud;
+END;
+//DELIMITER ;
+
+/*-------------------------------------------------------------------------------------------------------------*/
+DELIMITER //
+CREATE PROCEDURE view_by_dni_sol ( IN
+    _SolicitantesDNI varchar(8)
+)
+BEGIN
+        
+    SELECT * FROM solicitudes AS slctd INNER JOIN estados AS est ON slctd.Estados_idEstado = est.idEstado WHERE 
+    slctd.Solicitantes_DNI = _SolicitantesDNI;
+END;
+//DELIMITER ;
+
+/*-------------------------------------------------------------------------------------------------------------*/
+DELIMITER //
+CREATE PROCEDURE access_by_idSol_codAc ( IN
+    _idSolicitud int(11),
+    _codAcceso varchar(6)
+)
+BEGIN
+        
+    SELECT * FROM solicitudes WHERE idSolicitud = _idSolicitud AND codAcceso = _codAcceso;
+END;
+//DELIMITER ;
+/*--------------------------------------------------------------------------------------------------------------*/
+DELIMITER //
+CREATE PROCEDURE sp_listar_solicitudes (
+)
+BEGIN
+        
+    SELECT * FROM solicitudes;
+END;
+//DELIMITER ;

@@ -15,7 +15,7 @@
                 <h1 class="h2 text-gray-900 mb-4">Estado de solicitud</h1>
               </div>
               
-              <form class="user" method="POST" name="formulario" id="formulario">
+              <form class="user" method="POST" name="formulario" id="formulario" enctype="multipart/form-data">
                 <div class="container">
                   </br>
                   <hr>
@@ -68,7 +68,7 @@
                       <label><b>Comentarios</b></label>
                     </div>
                     <div class="col-sm-6 mt-1">
-                      <span>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor</span>
+                      <span><?= $datos['comentarios'];?></span>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -100,12 +100,18 @@
                   </div>
                   <?php if ($datos['idEstado']=="ESPPAGO") {?>
                   <div class="form-group row">
-                    <div class="col-sm-4 mt-1 mb-sm-0">
-                      <input type="file">
+                    <?php if (is_null($datos['pathVoucher'])){ ?>
+                    <div class="col-sm-6 mt-1 mb-sm-0">
+                      <input type="file" name="archivo">
                       <div class="input-group-prepend">
                       <!-- <span class="input-group-text" id="inputGroupFileAddon01"><i class="fas fa-paperclip" aria-hidden="true"></i></span> -->
                       </div>
                     </div>
+                    <?php } else {?>
+                    <div class="col-sm-6 mt-1">
+                      <label><?= $datos['pathVoucher']?></label>
+                    </div>
+                    <?php }?>
                   </div>
                   <?php } elseif ($datos['idEstado']=="PROCEMIS") {?>
                   <div class="form-group row">
@@ -113,7 +119,7 @@
                       <label><b>Voucher adjuntado</b></label>
                     </div>
                     <div class="col-sm-6 mt-1">
-                      <label>voucher.pdf</label>
+                      <label><?= $datos['pathVoucher']?></label>
                     </div>
                   </div>
                   <?php } } elseif ($datos['docEncontrado']==0 && $datos['docEncontrado']!="") {?>
@@ -131,10 +137,10 @@
                       <label><b>Comentarios</b></label>
                     </div>
                     <div class="col-sm-6 mt-1">
-                      <span>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor</span>
+                      <span><?= $datos['comentarios'];?></span>
                     </div>
                   </div>
-                  <?php } if ($datos['docEncontrado']==1 && $datos['idEstado']=="PROCEMIS") {?>
+                  <?php } if ($datos['docEncontrado']==1 && ($datos['idEstado']=="PROCEMIS" || $datos['idEstado']=="DOCEMIT")) {?>
                   <hr>
                   <div class="form-group row">
                     <div class="col-sm-6 mt-1 mb-sm-0">
@@ -163,7 +169,7 @@
                   <?php }?>
                   <div>
                     <hr>
-                    <?php if ($datos['idEstado']=='ESPPAGO') {?>
+                    <?php if ($datos['idEstado']=='ESPPAGO' && is_null($datos['pathVoucher'])) {?>
                     <button type="submit" name="btnRegistrarSolicitud" class="btn btn-primary btn-block" >Enviar voucher</button>
                     <?php }?>
                     <a href="<?= URL;?>Revision" class="btn btn-secondary btn-block">Salir</a>

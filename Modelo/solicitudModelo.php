@@ -33,7 +33,7 @@ class solicitudModelo
 
 	 public function listar()
 	 {
-	 	$sql = "SELECT * FROM solicitudes";
+	 	$sql = "CALL sp_listar_solicitudes();";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	return $datos;
 	 }
@@ -42,27 +42,24 @@ class solicitudModelo
 	 {
 	 	$sql = "CALL sp_c_solicitudes('{$this->otorgadoX}','{$this->aFavor}','{$this->Notarios_RUC}','{$this->Solicitantes_DNI}',
 	 		'{$this->Usuarios_DNI}');";
-		/*$sql = "INSERT INTO solicitudes (idSolicitud,fechaRegistro,otorgadoX,aFavor,fechaDoc,pathVoucher,fechaPago,fechaEntrega,codAcceso,
-				Estados_idEstado,Notarios_RUC,Solicitantes_DNI,Usuarios_DNI) values (null,NOW(),'{$this->otorgadoX}','{$this->aFavor}',
-				null,null,null,null,null,'PROCBUSQ','{$this->Notarios_RUC}','{$this->Solicitantes_DNI}','{$this->Usuarios_DNI}')";*/
 	 	$this->con->consultaSimple($sql);
 	 }
 
-	 public function edit()
+	 public function edit_voucher()
 	 {
-	 	
+	 	$sql = "UPDATE solicitudes SET pathVoucher = '{$this->pathVoucher}' WHERE idSolicitud = '{$this->idSolicitud}'";
+	 	$this->con->consultaSimple($sql);
 	 }
 
 	 public function access_by_idSol_codAc() {
-	 	$sql = "SELECT * FROM solicitudes WHERE idSolicitud = '{$this->idSolicitud}' AND codAcceso = '{$this->codAcceso}'";
+	 	$sql = "CALL access_by_idSol_codAc('{$this->idSolicitud}','{$this->codAcceso}');";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	$row = mysqli_num_rows($datos);
 	 	return $row;
 	 }
 
 	 public function view_by_idSol_codAc() {
-	 	$sql = "SELECT * FROM solicitudes AS slctd INNER JOIN estados AS est ON slctd.Estados_idEstado = est.idEstado WHERE 
-	 	slctd.idSolicitud = '{$this->idSolicitud}'";
+	 	$sql = "CALL view_by_idSol_codAc('{$this->idSolicitud}');";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	$row = mysqli_fetch_assoc($datos);
 	 	return $row;
@@ -70,8 +67,7 @@ class solicitudModelo
 
 	 public function view_by_dni_sol()
 	 {
-	 	$sql = "SELECT * FROM solicitudes AS slctd INNER JOIN estados AS est ON slctd.Estados_idEstado = est.idEstado WHERE 
-	 	slctd.Solicitantes_DNI = '{$this->Solicitantes_DNI}'";
+	 	$sql = "CALL view_by_dni_sol('{$this->Solicitantes_DNI}');";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	$row = mysqli_fetch_assoc($datos);
 	 	return $row;

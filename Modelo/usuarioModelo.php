@@ -28,7 +28,7 @@ class usuarioModelo
 
 	 public function listar()
 	 {
-	 	$sql = "SELECT * FROM usuarios";
+	 	$sql = "CALL sp_listar_usuarios();";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	return $datos;
 	 }
@@ -53,7 +53,7 @@ class usuarioModelo
 
 	 public function ver_user_ac()
 	 {
-	 	$sql = "SELECT * FROM usuarios WHERE rol = 'AtencionCliente'";
+	 	$sql = "CALL ver_user_ac();";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	$row = mysqli_fetch_assoc($datos);
 	 	return $row;

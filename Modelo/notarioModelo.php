@@ -25,29 +25,9 @@ class notarioModelo
 
 	 public function listar()
 	 {
-	 	$sql = "SELECT * FROM notarios";
+	 	$sql = "CALL sp_listar_notarios();";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	return $datos;
 	 }
 
-	 /*public function add()
-	 {
-	 	$sql = "INSERT INTO solicitantes (DNI,nombres,apellidoPaterno,apellidoMaterno,telefono,email) values 
-('{$this->DNI}','{$this->nombre}','{$this->apellidoPaterno}','{$this->apellidoMaterno}','{$this->telefono}','{$this->email}')";
-	 	$this->con->consultaSimple($sql);
-	 }
-
-	 public function edit()
-	 {
-	 	$sql = "UPDATE solicitantes";
-	 	$this->con->consultaSimple($sql);
-	 }
-
-	 public function view()
-	 {
-	 	$sql = "SELECT * FROM solicitudes WHERE idSolicitante = '{$this->idSolicitante}'";
-	 	$datos = $this->con->consultaRetorno($sql);
-	 	$row = mysqli_fetch_assoc($datos);
-	 	return $row;
-	 }*/
 }

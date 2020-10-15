@@ -26,29 +26,26 @@ class solicitanteModelo
 
 	 public function listar()
 	 {
-	 	$sql = "SELECT * FROM solicitudes";
+	 	$sql = "CALL sp_listar_solicitantes();";
 	 	$datos = $this->con->consultaRetorno($sql);
 	 	return $datos;
 	 }
 
 	 public function add()
 	 {
-	 	$sql = "INSERT INTO solicitantes (DNI,nombres,apellidoPaterno,apellidoMaterno,telefono,email) values 
-('{$this->DNI}','{$this->nombres}','{$this->apellidoPaterno}','{$this->apellidoMaterno}','{$this->telefono}','{$this->email}')";
+		$sql = "CALL sp_c_solicitantes('{$this->DNI}','{$this->nombres}','{$this->apellidoPaterno}','{$this->apellidoMaterno}',
+			'{$this->telefono}','{$this->email}');";
 	 	$this->con->consultaSimple($sql);
 	 }
 
-	 /*public function edit()
+	 public function edit()
 	 {
-	 	$sql = "UPDATE solicitantes";
-	 	$this->con->consultaSimple($sql);
+	 	$sql = "";
+	 	
 	 }
 
 	 public function view()
 	 {
-	 	$sql = "SELECT * FROM solicitudes WHERE idSolicitante = '{$this->idSolicitante}'";
-	 	$datos = $this->con->consultaRetorno($sql);
-	 	$row = mysqli_fetch_assoc($datos);
-	 	return $row;
-	 }*/
+	 	$sql = "";
+	 }
 }

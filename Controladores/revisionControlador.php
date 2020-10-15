@@ -33,9 +33,43 @@ class revisionControlador{
 			$datos = $this->solicitud->view_by_idSol_codAc();
 			return $datos;
 		} else {
+			$numSolic = $_SESSION['numSolicitud'];
+			@$nombre = trim($_FILES['archivo']['name']);
+			@$tmp_file = $_FILES['archivo']['tmp_name'];
+			@$tamano = $_FILES["file"]["size"];
+			$directory = './vouchers/';
+			$path = $directory.$nombre;
+
+			$tipoArchivo = strtolower(pathinfo($nombre, PATHINFO_EXTENSION));
 			
-			header ("Location: ".URL."Revision");
+			if ($tipoArchivo == "pdf" || $tipoArchivo == "jpg" || $tipoArchivo == "jpeg" || $tipoArchivo == "png") {
+			    if ($tamano < 1800000) {
+			        if (!file_exists($directory)) {
+			            mkdir($directory,0777,true);
+			            if (move_uploaded_file($tmp_file, $path)) {
+			                $this->solicitud->set("idSolicitud",$numSolic);
+			                $this->solicitud->set("pathVoucher",$path);
+			                $this->solicitud->edit_voucher();
+			                header ("Location: ".URL."Revision");
+			            } else {
+			                echo "No se pudo guardar el archivo";
+			            }
+			        } else {
+			            if (move_uploaded_file($tmp_file, $directory.'/'.$nombre)) {
+			            	$this->solicitud->set("idSolicitud",$numSolic);
+			                $this->solicitud->set("pathVoucher",$path);
+			                $this->solicitud->edit_voucher();
+			                header ("Location: ".URL."Revision");
+			            } else {
+			                echo "No se pudo guardar el archivo";			                
+			            }
+			        }
+			    } else {
+			        echo "Tamaño de archivo no permitido";
+			    }
+			} else {
+			    echo "Archivo no permitido";
+			}
 		}
-		
 	}
 }
